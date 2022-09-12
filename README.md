@@ -32,13 +32,13 @@ CI/CD is implemented using GitHub Actions. Upon commit to the "main" branch, the
 https://github.com/ronfa/tv-maze-service/actions 
 
 ### Scraper
-*TvMaze.com has between 64000 and 65000 shows in its database.
-*We are using SNS (Simple Notification Service) for adding scrape messages to an SQS queue (Simple Queue Service). 
-*We are adding 6500 messages, each with 10 shows to scrape (1-10, 11-20..), with a total of 65000. this can be configured.
-*A message handler (lamdba function) is then picking up messages from the queue and performing the scraping work (each lambda run scrapes 10 shows).
-The lambda function can  be scaled to finish the scrape work as needed.
-With a basic setting of 200 concurrent lambda executions, the scraping was finished within 3 minutes.
-*We are using the show endpoint and embedding the cast member information, this allows us to make a single api call per show. For example: https://api.tvmaze.com/shows/1?embed=cast
+* TvMaze.com has between 64000 and 65000 shows in its database.
+* We are using SNS (Simple Notification Service) for adding scrape messages to an SQS queue (Simple Queue Service). 
+* We are adding 6500 messages, each with 10 shows to scrape (1-10, 11-20..), with a total of 65000. this can be configured.
+* A message handler (lamdba function) is then picking up messages from the queue and performing the scraping work (each lambda run scrapes 10 shows).
+  * The lambda function can  be scaled to finish the scrape work as needed.
+  * With a basic setting of 200 concurrent lambda executions, the scraping was finished within 3 minutes.
+* We are using the show endpoint and embedding the cast member information, this allows us to make a single api call per show. For example: https://api.tvmaze.com/shows/1?embed=cast
 
 * The TvMaze Scraper is currently a console application which can be executed locally.
   * Url: https://github.com/ronfa/tv-maze-service/blob/main/src/CodingChallenge.Console/TVMazeConsoleRunner.cs
