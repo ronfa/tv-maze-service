@@ -57,6 +57,15 @@ public class TvMazeRepository : IReadOnlyTvMazeRepository, ITvMazeRepository
 
         var mappedEntity = _mapper.Map<List<TvShowRecordEntity>, List<TvShowEntity>>(result.Item1);
 
-        return new Tuple<List<TvShowEntity>, string>(mappedEntity, result.Item2);
+        var sorted = mappedEntity.Select(s =>
+            new TvShowEntity
+            {
+                Id = s.Id, 
+                Name = s.Name,
+                Cast = s.Cast.OrderByDescending(c => c.BirthDate)
+            }
+        ).ToList();
+
+        return new Tuple<List<TvShowEntity>, string>(sorted, result.Item2);
     }
 }

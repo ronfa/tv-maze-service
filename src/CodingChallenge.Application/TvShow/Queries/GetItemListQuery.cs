@@ -14,14 +14,12 @@ public class GetItemListQueryHandler : IRequestHandler<GetItemListQuery, PagedLi
         repo = context;
     }
 
-    public async Task<PagedList<Domain.TvShow.TvShowEntity>> Handle(GetItemListQuery request, CancellationToken cancellationToken)
+    public async Task<PagedList<Domain.TvShow.TvShowEntity>> Handle(GetItemListQuery request,
+        CancellationToken cancellationToken)
     {
-        var responseEntity = await repo.GetItemListAsync(request.PageSize,request.PaginationToken);
+        var responseEntity = await repo.GetItemListAsync(request.PageSize, request.PaginationToken, cancellationToken);
 
-        var sorted = responseEntity.Item1
-            .OrderBy(s => s.Id).ThenBy(
-                s => s.Cast.OrderByDescending(c => c.BirthDate)).ToList();
-
-        return new PagedList<Domain.TvShow.TvShowEntity>(sorted, sorted.Count,responseEntity.Item2);
+        return new PagedList<Domain.TvShow.TvShowEntity>(responseEntity.Item1, responseEntity.Item1.Count,
+            responseEntity.Item2);
     }
 }
