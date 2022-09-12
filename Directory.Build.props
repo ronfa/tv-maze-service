@@ -1,0 +1,9 @@
+<Project>
+    <PropertyGroup>
+        <AppTargetFramework Condition="$(AppTargetFramework) == ''">net6.0</AppTargetFramework>
+        <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
+        <Nullable>enable</Nullable>
+        <WarningsAsErrors>nullable</WarningsAsErrors>
+        <ImplicitUsings>enable</ImplicitUsings>
+    </PropertyGroup>
+</Project>

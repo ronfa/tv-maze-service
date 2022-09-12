@@ -1,0 +1,27 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>$(AppTargetFramework)</TargetFramework>
+    <ErrorOnDuplicatePublishOutputFiles>false</ErrorOnDuplicatePublishOutputFiles>
+  </PropertyGroup>
+
+	<ItemGroup>
+    <PackageReference Include="AutoMapper" />
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" />
+    <PackageReference Include="AWSSDK.DynamoDBv2" />
+		<PackageReference Include="AWSSDK.SimpleNotificationService" />
+		<PackageReference Include="AWSSDK.SecurityToken" />
+    <PackageReference Include="Amazon.Lambda.Serialization.Json" />
+    <PackageReference Include="Amazon.Lambda.APIGatewayEvents" />
+    <PackageReference Include="Amazon.Lambda.SQSEvents " />
+    <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" />
+		<PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore" />
+		
+
+	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\CodingChallenge.Domain\CodingChallenge.Domain.csproj" />
+    <ProjectReference Include="..\CodingChallenge.Application\CodingChallenge.Application.csproj" />
+	</ItemGroup>
+</Project>

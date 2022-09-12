@@ -1,0 +1,76 @@
+name: Coding Challenge Build Pipeline
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+env:
+  APPLICATION__Environment: dev
+  APPLICATION__DomainName: spark-logic.com
+  AWS_ACCOUNT_NUMBER: 662912956137
+  AWS_REGION: us-east-1
+  APPLICATION__AwsAccountNumber: 662912956137
+  APPLICATION__AwsRegion: us-east-1
+  APPLICATION__CertificateArn: arn:aws:acm:us-east-1:662912956137:certificate/4cdf0893-9c24-4f63-ac20-d3d7f2482929
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - run: git fetch --prune --unshallow --tags
+    
+    - name: Set up QEMU        
+      uses: docker/setup-qemu-action@v1
+    - name: Set up Docker Buildx        
+      uses: docker/setup-buildx-action@v1
+
+    - name: Configure AWS Credentials
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: us-east-1
+        # role-to-assume: ${{ secrets.AWS_ROLE_TO_ASSUME }}
+        # role-duration-seconds: 3600
+    
+    
+    - name: Install node
+      uses: actions/setup-node@v2
+      with:
+        node-version: "14"
+    
+    - name: Cache Node.js modules
+      uses: actions/cache@v2
+      with:
+        path: ~/.npm
+        key: ${{ runner.OS }}-node-${{ hashFiles('**/package-lock.json') }}
+        restore-keys: |
+          ${{ runner.OS }}-node-
+          ${{ runner.OS }}-
+    
+    - name: Install CDK
+      run: |
+        npm install -g aws-cdk@2.22.0
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v2
+      with:
+        dotnet-version: 6.0.x
+    
+    # - name: Cdk Bootstrap
+      # run: cdk bootstrap aws://662912956137/us-east-1
+    # - name: Cake Build Infra
+      # run: ./build/build.sh --target=infradeploy
+    # - name: Cake Build Database
+      # run: ./build/build.sh --target=databasedeploy
+    # - name: Cake Build Application Deploy
+      # run: ./build/build.sh --target=deploy
+    - name: Api Deploy
+      run: ./build/build.sh --target=apideploy
+    # - name: Send Messages
+    #   run: ./build/build.sh  
+   
