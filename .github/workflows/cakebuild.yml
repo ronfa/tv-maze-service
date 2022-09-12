@@ -61,14 +61,14 @@ jobs:
       with:
         dotnet-version: 6.0.x
     
-    # - name: Cdk Bootstrap
-      # run: cdk bootstrap aws://662912956137/us-east-1
-    # - name: Cake Build Infra
-      # run: ./build/build.sh --target=infradeploy
-    # - name: Cake Build Database
-      # run: ./build/build.sh --target=databasedeploy
-    # - name: Cake Build Application Deploy
-      # run: ./build/build.sh --target=deploy
+    - name: Cdk Bootstrap
+      run: cdk bootstrap aws://662912956137/us-east-1
+    - name: Cake Build Infra
+      run: ./build/build.sh --target=infradeploy
+    - name: Cake Build Database
+      run: ./build/build.sh --target=databasedeploy
+    - name: Cake Build Application Deploy
+      run: ./build/build.sh --target=deploy
     - name: Api Deploy
       run: ./build/build.sh --target=apideploy
     # - name: Send Messages
