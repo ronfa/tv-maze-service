@@ -19,27 +19,26 @@ CI/CD is implemented using GitHub Actions. Upon commit to the "main" branch, the
 ### Highlights
 
 * [AWS CDK](https://aws.amazon.com/cdk/) framework & [CloudFormation](https://aws.amazon.com/cloudformation/) is used as the Infrastructure as Code (IaC) tool to be able to create relevant infrastructure on AWS.
-* [Cake Buid](https://cakebuild.net/) is used as the build automation system. 
+* [Cake Build](https://cakebuild.net/) is used as the build automation system. 
 * [AWS](https://aws.amazon.com/) is the cloud platform where the solution is realised. 
   * Cloud Native (serverless) components are used such a [SNS](https://aws.amazon.com/sns/), [SQS](https://aws.amazon.com/sns/), [DynamoDB](https://aws.amazon.com/dynamodb/), [API Gateway](https://aws.amazon.com/api-gateway/).
 
 ### Urls
 
-- API
-Swagger: https://tvmazeapi-dev.spark-logic.com/swagger
-Get show by id endpoint: https://tvmazeapi-dev.spark-logic.com/api/shows/1
-Get shows endpoint: https://tvmazeapi-dev.spark-logic.com/api/shows/getall/10
-- Github actions with build and deploy log
+* API Swagger: https://tvmazeapi-dev.spark-logic.com/swagger
+* API Get show by id endpoint: https://tvmazeapi-dev.spark-logic.com/api/shows/1
+* API Get shows endpoint: https://tvmazeapi-dev.spark-logic.com/api/shows/getall/10
+* GitHub actions with build and deploy log
 https://github.com/ronfa/tv-maze-service/actions 
 
 ### Scraper
-TvMaze.com has between 64000 and 65000 shows in its database.
-We are using SNS (Simple Notification Service) for adding scrape messages to an SQS queue (Simple Queue Service). 
-We are adding 6500 messages, each with 10 shows to scrape (1-10, 11-20..), with a total of 65000. this can be configured.
-A message handler (lamdba function) is then picking up messages from the queue and performing the scraping work (each lambda run scrapes 10 shows).
+*TvMaze.com has between 64000 and 65000 shows in its database.
+*We are using SNS (Simple Notification Service) for adding scrape messages to an SQS queue (Simple Queue Service). 
+*We are adding 6500 messages, each with 10 shows to scrape (1-10, 11-20..), with a total of 65000. this can be configured.
+*A message handler (lamdba function) is then picking up messages from the queue and performing the scraping work (each lambda run scrapes 10 shows).
 The lambda function can  be scaled to finish the scrape work as needed.
 With a basic setting of 200 concurrent lambda executions, the scraping was finished within 3 minutes.
-We are using the show endpoint and embedding the cast member information, this allows us to make a single api call per show. For example: https://api.tvmaze.com/shows/1?embed=cast
+*We are using the show endpoint and embedding the cast member information, this allows us to make a single api call per show. For example: https://api.tvmaze.com/shows/1?embed=cast
 
 * The TvMaze Scraper is currently a console application which can be executed locally.
   * Url: https://github.com/ronfa/tv-maze-service/blob/main/src/CodingChallenge.Console/TVMazeConsoleRunner.cs

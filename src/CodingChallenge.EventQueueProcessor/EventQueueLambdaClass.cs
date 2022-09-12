@@ -54,10 +54,10 @@ public class EventQueueLambdaClass
 
         services.AddTransient<TvMazeScrapeCommandController, TvMazeScrapeCommandController>();
         services.AddTransient<TvMazeLambdaRunner, TvMazeLambdaRunner>();
+
         services.AddScoped<IScrapeService, ScrapeService>();
         services.AddScoped<IMessagePublisher, MessagePublisher>();
         services.AddScoped<ITvMazeHttpClient, TvMazeHttpClient>();
-
     }
 
 

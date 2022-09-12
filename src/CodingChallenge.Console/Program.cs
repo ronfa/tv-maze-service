@@ -4,6 +4,7 @@ using CodingChallenge.Infrastructure;
 using CodingChallenge.Infrastructure.Models;
 using CodingChallenge.Infrastructure.Services;
 using CommandLine;
+using MediatR;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -41,10 +42,13 @@ public class Program
     {
         services.AddApplicationBaseDependencies();
         services.AddInfrastructureDependencies(_configuration!, _logger!);
+        //services.AddMediatR(AppDomain.CurrentDomain.GetAssemblies());
         services.AddSingleton(_logger!);
         services.AddTransient<TvMazeScrapeCommandController, TvMazeScrapeCommandController>();
         services.AddTransient<TvMazeConsoleRunner, TvMazeConsoleRunner>();
         services.AddScoped<ITvMazeHttpClient, TvMazeHttpClient>();
+        services.AddScoped<IScrapeService, ScrapeService>();
+        services.AddScoped<IMessagePublisher, MessagePublisher>();
 
         services.AddSingleton(AwsApplication!);
         _serviceProvider = services.BuildServiceProvider();
