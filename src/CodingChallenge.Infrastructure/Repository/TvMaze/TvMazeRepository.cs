@@ -62,7 +62,7 @@ public class TvMazeRepository : IReadOnlyTvMazeRepository, ITvMazeRepository
             {
                 Id = s.Id, 
                 Name = s.Name,
-                Cast = s.Cast.OrderByDescending(c => c.BirthDate)
+                Cast = s.Cast.OrderBy(c => c.BirthDate.HasValue).ThenByDescending(c => c.BirthDate)
             }
         ).ToList();
 
