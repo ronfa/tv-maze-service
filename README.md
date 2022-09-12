@@ -101,3 +101,4 @@ You do this by going to your repository, clicking settings on the top menu, and 
 * Database Stack is deployed after infra stack. 
 * Main/Application Stack is then deployed as it has dependencies on the Infra & Database stacks.
 * API stack is then deployed as it has dependencies on the Infra & Database stacks
+
